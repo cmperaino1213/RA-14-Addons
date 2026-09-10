@@ -1,7 +1,6 @@
 -- made by cmperaino1213 :heart:
 -- Capzone system 3
 -- This was the most painful to make :sob:
--- e
 
 local pauseCaps = false
 local capActive = false
@@ -20,8 +19,6 @@ local capzones = {
             distress = false,
             recapped = true,
             underAttack = false,
-            moveSpawnA = true,
-            moveSpawnB = false
         }
     }, 
     S1 = {
@@ -36,8 +33,6 @@ local capzones = {
             distress = false,
             recapped = true,
             underAttack = false,
-            moveSpawnA = true,
-            moveSpawnB = false
         }
     },
     TSZ = {
@@ -52,8 +47,6 @@ local capzones = {
             distress = false,
             recapped = true,
             underAttack = false,
-            moveSpawnA = true,
-            moveSpawnB = false
         }
     }
 }
@@ -76,7 +69,68 @@ local hostileTeams = {
     "The Wolves Eyes"
 }
 
-local players = getPlayers()
+local spawns = {
+    nova = {
+    -- spawn names
+        SC = {
+            TC = f("TCSpawn"),
+            TAG = f("TAGSpawn"),
+            NTSH = f("NTSHSpawnBase")
+        },
+        Civils = {
+            ED = {
+                ED1 = f("EDSpawn1"),
+                ED2 = f("EDSpawn2"),
+                ED3 = f("EDSpawn3")
+            },
+            ID = {
+                ID1 = f("IDSpawn1"),
+                ID2 = f("IDSpawn2"),
+                ID3 = f("IDSpawn3")
+            },
+            RD = {
+                RD1 = f("RDSpawn1"),
+                RD2 = f("RDSpawn2"),
+                RD3 = f("RDSpawn3"),
+                TLA1 = f("TLASpawn1"),
+                TLA2 = f("TLASpawn2"),
+                TLA3 = f("TLASpawn3")
+            },
+            DoO = {
+                Base1 = f("DoOSpawnBase"),
+                Base2 = f("DoOSpawnBase2"),
+                S1 = f("DoOSpawnS1")
+            },
+            NCM = {
+                NCM1 = f("NCMSpawn1"),
+                NCM2 = f("NCMSpawn2"),
+                NCM3 = f("NCMSpawn3"),
+                NCM4 = f("NCMSpawn4")
+            }
+        },
+    },
+    RW = {
+    -- spawn names
+        RWTSZ = f("RWMainforceSpawnTSZ"),
+        RWS1 = f("RWMainforceSpawnS1"),
+        RWEA = f("RWMainforceSpawnEA"),
+        
+        Divs = {
+        ShadowsTSZ = f("RWShadowsSpawnTSZ"),
+        ShadowsS1 = f("RWShadowsSpawnS1"),
+        ShadowsEA = f("RWShadowsSpawnEA"),
+        ClawsTSZ = f("RWClawsSpawnTSZ"),
+        ClawsS1 = f("RWClawsSpawnS1"),
+        ClawsEA = f("RWClawsSpawnEA"),
+        EyesTSZ = f("RWEyesSpawnTSZ"),
+        EyesS1 = f("RWEyesSpawnS1"),
+        EyesEA = f("RWEyesSpawnEA"),
+        HuntTSZ = f("RWHuntSpawnTSZ"),
+        HuntS1 = f("RWHuntSpawnS1"),
+        HuntEA = f("RWHuntSpawnEA")
+        }
+    }
+}
 
 local function clamp(initial,min,max)
     if initial > max then
@@ -101,6 +155,109 @@ local team = getTeam(player)
         end
     end
     return false, ""
+end
+
+local function updateSpawns()
+    -- DO NOT MESS WITH THIS FUNCTION, ESPECIALLY THE VECTOR3 POSITIONS UNLESS YOU KNOW WHAT YOU ARE DOING
+local TSZGate = f("TSZCapGate")
+local S1Gate = f("S1CapGate")
+local EAGate = f("EACapGate")
+
+    -- EA
+    if capzones.EA.capPoints >= 100 then
+        EAGate.Position = Vector3.new(-549.706,-9.35,683.029)
+        spawns.nova.SC.TC.Position = Vector3.new(982,10,142)
+        spawns.nova.Civils.DoO.Base1.Position = Vector3.new(1067,8,111)
+        spawns.nova.Civils.DoO.Base2.Position = Vector3.new(1067,8,111)
+        spawns.nova.SC.NTSH.Position = Vector3.new(1040,8,99)
+        spawns.RW.RWEA.Position = Vector3.new(2057,-11,-321)
+        spawns.RW.Divs.ShadowsEA.Position = Vector3.new(679,-24,136)
+        spawns.RW.Divs.ClawsEA.Position = Vector3.new(679,-24,136)
+        spawns.RW.Divs.EyesEA.Position = Vector3.new(679,-24,136)
+        spawns.RW.Divs.HuntEA.Position = Vector3.new(679,-24,136)
+    else
+        EAGate.Position = Vector3.new(-549.706,-0.65,683.029)
+        spawns.nova.SC.TC.Position = Vector3.new(1778,-12,-223)
+        spawns.nova.Civils.DoO.Base1.Position = Vector3.new(1768,-158,-475)
+        spawns.nova.Civils.DoO.Base2.Position = Vector3.new(1768,-158,-475)
+        spawns.nova.SC.NTSH.Position = Vector3.new(1768,-158,-493)
+        spawns.RW.RWEA.Position = Vector3.new(-587,-3.7,697) 
+        spawns.RW.Divs.ShadowsEA.Position = Vector3.new(-580.96,-3.7,652.72)
+        spawns.RW.Divs.ClawsEA.Position = Vector3.new(-594.94,-3.7,652.72)
+        spawns.RW.Divs.EyesEA.Position = Vector3.new(-572.94,-3.7,652.72)
+        spawns.RW.Divs.HuntEA.Position = Vector3.new(-587.96,-3.7,652.72)
+    end
+    -- S1
+    if capzones.S1.capPoints >= 100 then
+        S1Gate.Position = Vector3.new(-549.706,-9.35,667.829)
+        spawns.nova.SC.TAG.Position = Vector3.new(992,10,142)
+        spawns.nova.Civils.DoO.S1.Position = Vector3.new(1066,8,111)
+        for _, spawn in pairs(spawns.nova.Civils.ED) do
+        spawn.Position = Vector3.new(943,10,-121)
+        end
+        for _, spawn in pairs(spawns.nova.Civils.ID) do
+        spawn.Position = Vector3.new(938,10,-117)
+        end
+        for _, spawn in pairs(spawns.nova.Civils.RD) do
+        spawn.Position = Vector3.new(938,10,-111)
+        end
+        for _, spawn in pairs(spawns.nova.Civils.NCM) do
+        spawn.Position = Vector3.new(948,10,-121)
+        end
+        -- RW
+        spawns.RW.RWS1.Position = Vector3.new(679,-24,136)
+        spawns.RW.Divs.ShadowsS1.Position = Vector3.new(679,-24,136)
+        spawns.RW.Divs.ClawsS1.Position = Vector3.new(679,-24,136)
+        spawns.RW.Divs.EyesS1.Position = Vector3.new(679,-24,136)
+        spawns.RW.Divs.HuntS1.Position = Vector3.new(679,-24,136)
+    else
+        S1Gate.Position = Vector3.new(-549.706,-0.65,667.829)
+        spawns.nova.SC.TAG.Position = Vector3.new(653,10,121)
+        -- civils
+        spawns.nova.Civils.DoO.S1.Position = Vector3.new(661,-18,-42)
+        spawns.nova.Civils.ED.ED1.Position = Vector3.new(675,-27,136)
+        spawns.nova.Civils.ED.ED2.Position = Vector3.new(679,-27,136)
+        spawns.nova.Civils.ED.ED3.Position = Vector3.new(683,-27,136)
+        spawns.nova.Civils.ID.ID1.Position = Vector3.new(427,26,143)
+        spawns.nova.Civils.ID.ID2.Position = Vector3.new(427,26,146)
+        spawns.nova.Civils.ID.ID3.Position = Vector3.new(427,26,150)
+        spawns.nova.Civils.RD.RD1.Position = Vector3.new(608,27,-311)
+        spawns.nova.Civils.RD.RD2.Position = Vector3.new(604,27,-311)
+        spawns.nova.Civils.RD.RD3.Position = Vector3.new(600,27,-311)
+        spawns.nova.Civils.RD.TLA1.Position = Vector3.new(455,8,-258)
+        spawns.nova.Civils.RD.TLA2.Position = Vector3.new(451,8,-258)
+        spawns.nova.Civils.RD.TLA3.Position = Vector3.new(447,8,-258)
+        spawns.nova.Civils.NCM.NCM1.Position = Vector3.new(669,8,-11)
+        spawns.nova.Civils.NCM.NCM2.Position = Vector3.new(669,8,13)
+        spawns.nova.Civils.NCM.NCM3.Position = Vector3.new(634,8,-8)
+        spawns.nova.Civils.NCM.NCM4.Position = Vector3.new(634,8,14)
+        -- RW
+        spawns.RW.RWS1.Position = Vector3.new(-591,-3.7,692)
+        spawns.RW.Divs.ShadowsS1.Position = Vector3.new(-583.9,-3.7,652.72)
+        spawns.RW.Divs.ClawsS1.Position = Vector3.new(-597.88,-3.7,652.72)
+        spawns.RW.Divs.EyesS1.Position = Vector3.new(-575.9,-3.7,652.72)
+        spawns.RW.Divs.HuntS1.Position = Vector3.new(-590.88,-3.7,652.72)
+    end
+    -- TSZ
+    if capzones.TSZ.capPoints >= 100 then
+        TSZGate.Position = Vector3.new(-549.706,-9.35,675.529)
+        local cavePart = f("RWTSZCapWall")
+        cavePart.Position = Vector3.new(1242,-7,-670)
+        spawns.RW.RWTSZ.Position = Vector3.new(1280,11,-774)
+        spawns.RW.Divs.ShadowsTSZ.Position = Vector3.new(1280,11,-774)
+        spawns.RW.Divs.ClawsTSZ.Position = Vector3.new(1280,11,-774)
+        spawns.RW.Divs.EyesTSZ.Position = Vector3.new(1280,11,-774)
+        spawns.RW.Divs.HuntTSZ.Position = Vector3.new(1280,11,-774)
+    else
+        TSZGate.Position = Vector3.new(-549.706,-0.65,675.529)
+        local cavePart = f("RWTSZCapWall")
+        cavePart.Position = Vector3.new(1242,15,-670)
+        spawns.RW.RWTSZ.Position = Vector3.new(-579,-3.7,697)
+        spawns.RW.Divs.ShadowsTSZ.Position = Vector3.new(-580.96,-3.7,649.67)
+        spawns.RW.Divs.ClawsTSZ.Position = Vector3.new(-594.94,-3.7,649.67)
+        spawns.RW.Divs.EyesTSZ.Position = Vector3.new(-572.94,-3.7,649.67)
+        spawns.RW.Divs.HuntTSZ.Position = Vector3.new(-587.96,-3.7,649.67)
+    end
 end
 
 local function updateCaps()
@@ -133,6 +290,7 @@ local function updateCaps()
         -- else turn it off
         capActive = false
     end
+    updateSpawns()
 end
 
 local function checkInCap(player)
@@ -193,8 +351,7 @@ local function updateInCap()
     capzone.hostilesInCap = 0
     capzone.friendliesInCap = 0
     end
-    players = getPlayers()
-    for _, player in pairs(players) do
+    for _, player in pairs(getPlayers()) do
     local affiliation,capzone = checkInCap(player)
         if affiliation == "hostile" and capzone == "EA" then
             capzones.EA.hostilesInCap = capzones.EA.hostilesInCap + 1
@@ -241,14 +398,6 @@ local function updateAlarms()
         runCommand("delay 5.8 play 9144649529")
         capzones.EA.oldAlarms.distress = true
     end
-    if capzones.EA.capPoints <= 99 and not capzones.EA.oldAlarms.moveSpawnA then
-        announce(hostName, "Move TC spawn to EA and close RW EA access")
-        capzones.EA.oldAlarms.moveSpawnA = true
-    end
-    if capzones.EA.capPoints >= 100 and not capzones.EA.oldAlarms.moveSpawnB then
-        announce(hostName, "Move TC spawn to main armory and open RW EA access")
-        capzones.EA.oldAlarms.moveSpawnB = true
-    end
     if capzones.EA.capPoints == 0 and not capzones.EA.oldAlarms.recapped then
         -- if EA cap points are at 0 and it isnt an old alarm then
         announce("[COMMAND]: The Entity Area has been taken back by the Corporation.", true)
@@ -272,14 +421,6 @@ local function updateAlarms()
         runCommand("delay 20 riot M9,l2 60")
         capzones.TSZ.oldAlarms.distress = true
     end
-    if capzones.TSZ.capPoints <= 99 and not capzones.TSZ.oldAlarms.moveSpawnA then
-        announce(hostName, "Remove RW TSZ access")
-        capzones.TSZ.oldAlarms.moveSpawnA = true
-    end
-    if capzones.TSZ.capPoints >= 100 and not capzones.TSZ.oldAlarms.moveSpawnB then
-        announce(hostName, "Open RW TSZ access")
-        capzones.TSZ.oldAlarms.moveSpawnB = true
-    end
     if capzones.TSZ.capPoints == 0 and not capzones.TSZ.oldAlarms.recapped then
         -- if TSZ cap points are at 0 and it isnt an old alarm then
         announce("[COMMAND]: The Test Subject Zone has been taken back by the Corporation.",true)
@@ -302,14 +443,6 @@ local function updateAlarms()
         runCommand("play 9144625303")
         runCommand("delay 5.8 play 9144649529")
         capzones.S1.oldAlarms.distress = true
-    end
-    if capzones.S1.capPoints <= 99 and not capzones.S1.oldAlarms.moveSpawnA then
-        announce(hostName, "Move S1 spawns to S1 and close RW S1 access")
-        capzones.S1.oldAlarms.moveSpawnA = true
-    end
-    if capzones.S1.capPoints >= 100 and not capzones.S1.oldAlarms.moveSpawnB then
-        announce(hostName, "Move S1 spawns out of S1 and open RW S1 access")
-        capzones.S1.oldAlarms.moveSpawnB = true
     end
     if capzones.S1.capPoints == 0 and not capzones.S1.oldAlarms.recapped then
         -- if S1 cap points are at 0 and it isnt an old alarm then
@@ -349,7 +482,7 @@ local devRankID = getPlayerRankInGroup(player,32613990)
 end)
 
 local function checkHost()
-    for _, player in pairs(players) do
+    for _, player in pairs(getPlayers()) do
     local playerID = getUserId(player)
         if playerID == hostID then
         return true
@@ -385,6 +518,8 @@ local function resetCaps()
     -- TSZ
     setSignText("TSZCapSign1", capzones.TSZ.capPoints)
     setSignText("TSZCapSign2", capzones.TSZ.capPoints)
+    -- Reset spawns
+    updateSpawns()
 end
 
 while true do
