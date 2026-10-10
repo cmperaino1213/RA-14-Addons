@@ -7,7 +7,7 @@ local capActive = false
 local hostID,hostName = getHost()
 local hostIngameAlert = {
     outOfGame = false,
-    ingame = false
+    ingame = true
 }
 
 local capzones = {
@@ -370,6 +370,12 @@ local function updateAlarms()
         announce("[COMMAND]: A distress signal has been recieved from the Entity Area.",true)
         runCommand("play 9144625303")
         runCommand("delay 5.8 play 9144649529")
+        local time = os.date("[%Y-%m-%d %H:%M:%S]")
+        signal("cDebug",{
+            Action = "Distress",
+            Time = time,
+            Message = "EA sent a Distress Signal. Points: " .. capzones.EA.capPoints .. " | Hostiles: " .. capzones.EA.hostilesInCap .. " | Friendlies: " .. capzones.EA.friendliesInCap
+        })
         capzones.EA.oldAlarms.distress = true
     end
     if capzones.EA.capPoints == 0 and not capzones.EA.oldAlarms.recapped then
@@ -377,6 +383,12 @@ local function updateAlarms()
         announce("[COMMAND]: The Entity Area has been taken back by the Corporation.", true)
         runCommand("play 9144625303")
         runCommand("delay 5.8 play 4913624102")
+        local time = os.date("[%Y-%m-%d %H:%M:%S]")
+        signal("cDebug",{
+            Action = "Recapped",
+            Time = time,
+            Message = "EA was recapped. Points: " .. capzones.EA.capPoints .. " | Hostiles: " .. capzones.EA.hostilesInCap .. " | Friendlies: " .. capzones.EA.friendliesInCap
+        })
         capzones.EA.oldAlarms.recapped = true
     end
     if capzones.EA.capPoints >= 1 and not capzones.EA.oldAlarms.underAttack then
@@ -384,6 +396,12 @@ local function updateAlarms()
         announce("[COMMAND]: The Entity Area is under attack.", true)
         runCommand("play 9144625303")
         runCommand("delay 5.8 play 9144640726")
+        local time = os.date("[%Y-%m-%d %H:%M:%S]")
+        signal("cDebug",{
+            Action = "Under Attack",
+            Time = time,
+            Message = "EA is under attack. Points: " .. capzones.EA.capPoints .. " | Hostiles: " .. capzones.EA.hostilesInCap .. " | Friendlies: " .. capzones.EA.friendliesInCap
+        })
         capzones.EA.oldAlarms.underAttack = true
     end
 -- TSZ
@@ -393,6 +411,12 @@ local function updateAlarms()
         runCommand("play 9144625303")
         runCommand("delay 5.8 play 9144649529")
         runCommand("delay 20 riot M9,l2 60")
+        local time = os.date("[%Y-%m-%d %H:%M:%S]")
+        signal("cDebug",{
+            Action = "Distress",
+            Time = time,
+            Message = "TSZ sent a Distress Signal. Points: " .. capzones.TSZ.capPoints .. " | Hostiles: " .. capzones.TSZ.hostilesInCap .. " | Friendlies: " .. capzones.TSZ.friendliesInCap
+        })
         capzones.TSZ.oldAlarms.distress = true
     end
     if capzones.TSZ.capPoints == 0 and not capzones.TSZ.oldAlarms.recapped then
@@ -401,6 +425,12 @@ local function updateAlarms()
         runCommand("play 9144625303")
         runCommand("delay 5.8 play 4913624102")
         runCommand("delay 20 riot end")
+        local time = os.date("[%Y-%m-%d %H:%M:%S]")
+        signal("cDebug",{
+            Action = "Recapped",
+            Time = time,
+            Message = "TSZ was recapped. Points: " .. capzones.TSZ.capPoints .. " | Hostiles: " .. capzones.TSZ.hostilesInCap .. " | Friendlies: " .. capzones.TSZ.friendliesInCap
+        })
         capzones.TSZ.oldAlarms.recapped = true
     end
     if capzones.TSZ.capPoints >= 1 and not capzones.TSZ.oldAlarms.underAttack then
@@ -408,6 +438,12 @@ local function updateAlarms()
         announce("[COMMAND]: The Test Subject Zone is under attack.",true)
         runCommand("play 9144625303")
         runCommand("delay 5.8 play 9144640726")
+        local time = os.date("[%Y-%m-%d %H:%M:%S]")
+        signal("cDebug",{
+            Action = "Under Attack",
+            Time = time,
+            Message = "TSZ is under attack. Points: " .. capzones.TSZ.capPoints .. " | Hostiles: " .. capzones.TSZ.hostilesInCap .. " | Friendlies: " .. capzones.TSZ.friendliesInCap
+        })
         capzones.TSZ.oldAlarms.underAttack = true
     end
 -- S1
@@ -420,7 +456,7 @@ local function updateAlarms()
         signal("cDebug",{
             Action = "Distress",
             Time = time,
-            Message = "Sector 1 sent a Distress Signal. Points: " .. capzones.S1.capPoints .. " Hostiles: " .. capzones.S1.hostilesInCap .. " Friendlies: " .. capzones.S1.friendliesInCap
+            Message = "Sector 1 sent a Distress Signal. Points: " .. capzones.S1.capPoints .. " | Hostiles: " .. capzones.S1.hostilesInCap .. " | Friendlies: " .. capzones.S1.friendliesInCap
         })
         capzones.S1.oldAlarms.distress = true
     end
@@ -433,7 +469,7 @@ local function updateAlarms()
         signal("cDebug",{
             Action = "Recapped",
             Time = time,
-            Message = "Sector 1 was Recaptured. Points: " .. capzones.S1.capPoints .. " Hostiles: " .. capzones.S1.hostilesInCap .. " Friendlies: " .. capzones.S1.friendliesInCap
+            Message = "Sector 1 was recapped. Points: " .. capzones.S1.capPoints .. " | Hostiles: " .. capzones.S1.hostilesInCap .. " | Friendlies: " .. capzones.S1.friendliesInCap
         })
         capzones.S1.oldAlarms.recapped = true
     end
@@ -446,7 +482,7 @@ local function updateAlarms()
         signal("cDebug",{
             Action = "Under Attack",
             Time = time,
-            Message = "Sector 1 is under attack. Points: " .. capzones.S1.capPoints .. " Hostiles: " .. capzones.S1.hostilesInCap .. " Friendlies: " .. capzones.S1.friendliesInCap
+            Message = "Sector 1 is under attack. Points: " .. capzones.S1.capPoints .. " | Hostiles: " .. capzones.S1.hostilesInCap .. " | Friendlies: " .. capzones.S1.friendliesInCap
         })
         capzones.S1.oldAlarms.underAttack = true
     end
