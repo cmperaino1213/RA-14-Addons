@@ -83,15 +83,18 @@ local body = jsonEncode(pl)
     end
 end)
 
-signalReceived("GenLog", function(Data)
+signalReceived("cDebug", function(Data)
 local Action = Data.Action
 local Time = Data.Time
 local Message = Data.Message
-
-local webhook = "https://discord.com/api/webhooks/1530416063177818272/sc5vRQoLLgMmd-Fn1LXbhys5tTp6-7i3ekbP6hMLeQCSlI8jRpVrg0eZvB5dUiOJqC9X"
+local Webhook = "https://discord.com/api/webhooks/1558611649701609502/rXN9Kdhd5l0EaPWw5ckVWJcdmmcvbL2L37Jd0N2UWOihPu-97FTiaFLhXvG8LQNJV1JB"
 
     if Action == "Log" then
-    Message = Time .. " " .. Message
-    sendWebhook(Message,webhook)
+    Message = Time .. "  [INFO] Chatlogger started"
+    sendWebhook(Message, Webhook)
+    elseif Action == "Command" then
+    sendWebhook(Message, Webhook)    
+    else
+    sendWebhook(Time .. " " .. Message, Webhook)
     end
 end)
