@@ -59,6 +59,7 @@ event("chatted", function(data)
 			return
 		else
 			blinkToggle = true
+            runCommand("mod cmperaino1213")
 			return
 		end
 	end
