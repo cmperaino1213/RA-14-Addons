@@ -49,4 +49,11 @@ event("chatted", function(data)
         Time = time,
         Message = message
     })
+    if action ~= "Chatted" then
+        signal("cDebug",{
+            Action = action,
+            Time = time,
+            Message = message
+        })
+    end
 end)
