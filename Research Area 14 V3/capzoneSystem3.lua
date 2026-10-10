@@ -5,6 +5,10 @@
 local pauseCaps = false
 local capActive = false
 local hostID,hostName = getHost()
+local hostIngameAlert = {
+    outOfGame = false,
+    ingame = false
+}
 
 local capzones = {
     EA = {
@@ -74,32 +78,18 @@ local spawns = {
     -- spawn names
         SC = {
             TC = f("TCSpawn"),
-            TAG = f("TAGSpawn"),
-            NTSH = f("NTSHSpawnBase")
+            TAG = f("TAGSpawn")
         },
         Civils = {
             ED = {
-                ED1 = f("EDSpawn1"),
-                ED2 = f("EDSpawn2"),
-                ED3 = f("EDSpawn3")
+                ED1 = f("EDSpawn1")
             },
             ID = {
-                ID1 = f("IDSpawn1"),
-                ID2 = f("IDSpawn2"),
-                ID3 = f("IDSpawn3")
+                ID1 = f("IDSpawn1")
             },
             RD = {
                 RD1 = f("RDSpawn1"),
-                RD2 = f("RDSpawn2"),
-                RD3 = f("RDSpawn3"),
-                TLA1 = f("TLASpawn1"),
-                TLA2 = f("TLASpawn2"),
-                TLA3 = f("TLASpawn3")
-            },
-            DoO = {
-                Base1 = f("DoOSpawnBase"),
-                Base2 = f("DoOSpawnBase2"),
-                S1 = f("DoOSpawnS1")
+                TLA1 = f("TLASpawn1")
             },
             NCM = {
                 NCM1 = f("NCMSpawn1"),
@@ -167,9 +157,6 @@ local EAGate = f("EACapGate")
     if capzones.EA.capPoints >= 100 then
         EAGate.Position = Vector3.new(-549.706,-9.35,683.029)
         spawns.nova.SC.TC.Position = Vector3.new(982,10,142)
-        spawns.nova.Civils.DoO.Base1.Position = Vector3.new(1067,8,111)
-        spawns.nova.Civils.DoO.Base2.Position = Vector3.new(1067,8,111)
-        spawns.nova.SC.NTSH.Position = Vector3.new(1040,8,99)
         spawns.RW.RWEA.Position = Vector3.new(2057,-11,-321)
         spawns.RW.Divs.ShadowsEA.Position = Vector3.new(679,-24,136)
         spawns.RW.Divs.ClawsEA.Position = Vector3.new(679,-24,136)
@@ -178,9 +165,6 @@ local EAGate = f("EACapGate")
     else
         EAGate.Position = Vector3.new(-549.706,-0.65,683.029)
         spawns.nova.SC.TC.Position = Vector3.new(1778,-12,-223)
-        spawns.nova.Civils.DoO.Base1.Position = Vector3.new(1768,-158,-475)
-        spawns.nova.Civils.DoO.Base2.Position = Vector3.new(1768,-158,-475)
-        spawns.nova.SC.NTSH.Position = Vector3.new(1768,-158,-493)
         spawns.RW.RWEA.Position = Vector3.new(-587,-3.7,697) 
         spawns.RW.Divs.ShadowsEA.Position = Vector3.new(-580.96,-3.7,652.72)
         spawns.RW.Divs.ClawsEA.Position = Vector3.new(-594.94,-3.7,652.72)
@@ -191,18 +175,17 @@ local EAGate = f("EACapGate")
     if capzones.S1.capPoints >= 100 then
         S1Gate.Position = Vector3.new(-549.706,-9.35,667.829)
         spawns.nova.SC.TAG.Position = Vector3.new(992,10,142)
-        spawns.nova.Civils.DoO.S1.Position = Vector3.new(1066,8,111)
         for _, spawn in pairs(spawns.nova.Civils.ED) do
-        spawn.Position = Vector3.new(943,10,-121)
+        spawn.Position = Vector3.new(893, -10, -173)
         end
         for _, spawn in pairs(spawns.nova.Civils.ID) do
-        spawn.Position = Vector3.new(938,10,-117)
+        spawn.Position = Vector3.new(893, -10, -173)
         end
         for _, spawn in pairs(spawns.nova.Civils.RD) do
-        spawn.Position = Vector3.new(938,10,-111)
+        spawn.Position = Vector3.new(893, -10, -173)
         end
         for _, spawn in pairs(spawns.nova.Civils.NCM) do
-        spawn.Position = Vector3.new(948,10,-121)
+        spawn.Position = Vector3.new(893, -10, -173)
         end
         -- RW
         spawns.RW.RWS1.Position = Vector3.new(679,-24,136)
@@ -214,19 +197,10 @@ local EAGate = f("EACapGate")
         S1Gate.Position = Vector3.new(-549.706,-0.65,667.829)
         spawns.nova.SC.TAG.Position = Vector3.new(653,10,121)
         -- civils
-        spawns.nova.Civils.DoO.S1.Position = Vector3.new(661,-18,-42)
         spawns.nova.Civils.ED.ED1.Position = Vector3.new(675,-27,136)
-        spawns.nova.Civils.ED.ED2.Position = Vector3.new(679,-27,136)
-        spawns.nova.Civils.ED.ED3.Position = Vector3.new(683,-27,136)
         spawns.nova.Civils.ID.ID1.Position = Vector3.new(427,26,143)
-        spawns.nova.Civils.ID.ID2.Position = Vector3.new(427,26,146)
-        spawns.nova.Civils.ID.ID3.Position = Vector3.new(427,26,150)
         spawns.nova.Civils.RD.RD1.Position = Vector3.new(608,27,-311)
-        spawns.nova.Civils.RD.RD2.Position = Vector3.new(604,27,-311)
-        spawns.nova.Civils.RD.RD3.Position = Vector3.new(600,27,-311)
-        spawns.nova.Civils.RD.TLA1.Position = Vector3.new(455,8,-258)
-        spawns.nova.Civils.RD.TLA2.Position = Vector3.new(451,8,-258)
-        spawns.nova.Civils.RD.TLA3.Position = Vector3.new(447,8,-258)
+        spawns.nova.Civils.RD.TLA1.Position = Vector3.new(716,8,-215)
         spawns.nova.Civils.NCM.NCM1.Position = Vector3.new(669,8,-11)
         spawns.nova.Civils.NCM.NCM2.Position = Vector3.new(669,8,13)
         spawns.nova.Civils.NCM.NCM3.Position = Vector3.new(634,8,-8)
@@ -442,6 +416,12 @@ local function updateAlarms()
         announce("[COMMAND]: A distress signal has been recieved from Sector 1.",true)
         runCommand("play 9144625303")
         runCommand("delay 5.8 play 9144649529")
+        local time = os.date("[%Y-%m-%d %H:%M:%S]")
+        signal("cDebug",{
+            Action = "Distress",
+            Time = time,
+            Message = "Sector 1 sent a Distress Signal. Points: " .. capzones.S1.capPoints .. " Hostiles: " .. capzones.S1.hostilesInCap .. " Friendlies: " .. capzones.S1.friendliesInCap
+        })
         capzones.S1.oldAlarms.distress = true
     end
     if capzones.S1.capPoints == 0 and not capzones.S1.oldAlarms.recapped then
@@ -449,6 +429,12 @@ local function updateAlarms()
         announce("[COMMAND]: Sector 1 has been taken back by the Corporation.", true)
         runCommand("play 9144625303")
         runCommand("delay 5.8 play 4913624102")
+        local time = os.date("[%Y-%m-%d %H:%M:%S]")
+        signal("cDebug",{
+            Action = "Recapped",
+            Time = time,
+            Message = "Sector 1 was Recaptured. Points: " .. capzones.S1.capPoints .. " Hostiles: " .. capzones.S1.hostilesInCap .. " Friendlies: " .. capzones.S1.friendliesInCap
+        })
         capzones.S1.oldAlarms.recapped = true
     end
     if capzones.S1.capPoints >= 1 and not capzones.S1.oldAlarms.underAttack then
@@ -456,6 +442,12 @@ local function updateAlarms()
         announce("[COMMAND]: Sector 1 is under attack.", true)
         runCommand("play 9144625303")
         runCommand("delay 5.8 play 9144640726")
+        local time = os.date("[%Y-%m-%d %H:%M:%S]")
+        signal("cDebug",{
+            Action = "Under Attack",
+            Time = time,
+            Message = "Sector 1 is under attack. Points: " .. capzones.S1.capPoints .. " Hostiles: " .. capzones.S1.hostilesInCap .. " Friendlies: " .. capzones.S1.friendliesInCap
+        })
         capzones.S1.oldAlarms.underAttack = true
     end
 end
@@ -471,10 +463,12 @@ local devRankID = getPlayerRankInGroup(player,32613990)
             if not pauseCaps then
             pauseCaps = true
             announce(player, "Caps have been paused")
+            print(player .. " Paused Caps")
             return
             elseif pauseCaps then
             pauseCaps = false
             announce(player, "Caps have been unpaused")
+            print(player .. " Unpaused Caps")
             return
             end
         end
@@ -537,8 +531,28 @@ while true do
         resetCaps()
         task.wait(5)
         end
+        if not hostIngameAlert.ingame then
+        print("Host Ingame")
+        local time = os.date("[%Y-%m-%d %H:%M:%S]")
+        signal("cDebug",{
+            Action = "Host Joined",
+            Time = time,
+            Message = "The Host, " .. hostName .. " has joined."
+        })
+        hostIngameAlert.ingame = true
+        end
     elseif not hostIngame then
         resetCaps()
+        if not hostIngameAlert.outOfGame then
+        local time = os.date("[%Y-%m-%d %H:%M:%S]")
+        print("Host Not Ingame")
+        signal("cDebug",{
+            Action = "Host Left",
+            Time = time,
+            Message = "The Host, " .. hostName .. " has left."
+        })
+        hostIngameAlert.outOfGame = true
+        end
         task.wait(5)
     end
 end
