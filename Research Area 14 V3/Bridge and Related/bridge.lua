@@ -88,13 +88,13 @@ local Action = Data.Action
 local Time = Data.Time
 local Message = Data.Message
 local Webhook = "https://discord.com/api/webhooks/1558611649701609502/rXN9Kdhd5l0EaPWw5ckVWJcdmmcvbL2L37Jd0N2UWOihPu-97FTiaFLhXvG8LQNJV1JB"
-
     if Action == "Log" then
-    Message = Time .. "  [INFO] Chatlogger started"
-    sendWebhook(Message, Webhook)
+    Message = Time .. " [INFO] Chatlogger started"
+    sendWebhook(Message,Webhook)
     elseif Action == "Command" then
-    sendWebhook(Message, Webhook)    
+    sendWebhook(Message,Webhook)
     else
-    sendWebhook(Time .. " " .. Message, Webhook)
+    Message = Time .. " " .. Message
+    sendWebhook(Message,Webhook)
     end
 end)
