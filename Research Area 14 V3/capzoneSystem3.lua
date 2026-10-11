@@ -9,6 +9,7 @@ local hostIngameAlert = {
     outOfGame = false,
     ingame = true
 }
+local initialized = false
 
 local capzones = {
     EA = {
@@ -121,6 +122,15 @@ local spawns = {
         }
     }
 }
+
+local function sendStart()
+local time = os.date("[%Y-%m-%d %H:%M:%S]")
+signal("cDebug",{
+    Action = "Start",
+    Time = time,
+    Message = "[SERVER] Script started"
+})
+end
 
 local function clamp(initial,min,max)
     if initial > max then
@@ -590,5 +600,9 @@ while true do
         hostIngameAlert.outOfGame = true
         end
         task.wait(5)
+    end
+    if not initialized then
+        sendStart()
+        initialized = true
     end
 end
