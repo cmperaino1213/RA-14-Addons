@@ -2,7 +2,7 @@
 -- Capzone system 3
 -- This was the most painful to make :sob:
 
-local pauseCaps = false
+local pauseCaps = true
 local capActive = false
 local hostID,hostName = getHost()
 local hostIngameAlert = {
