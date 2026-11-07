@@ -44,10 +44,10 @@ local groupIDs = {
 local function checkVIP(player,MCRank,team)
     if MCRank == 7 then
         -- If the player is a CO then return true and the CO log
-        return true, team, "Priority: O"
+        return true, team, "Class - O"
     elseif MCRank == 8 then
     -- If the player is a CX then return true and the CX log
-        return true, team, "Priotity: X"
+        return true, team, "Class - X"
     elseif MCRank == 254 then
     -- If the player is TA then return true and the TA log
         return true, team, "The Administrator"
@@ -61,7 +61,7 @@ local function checkVIP(player,MCRank,team)
             local depRank = getPlayerRankInGroup(player,groupIDs.SC)
             if depRank >= 11 and depRank <= 12 then
             -- If the player is the Commander or Head Commander then return true and the SC Dir log
-                return true, team, "SC Directorate"
+                return true, team, "(SC Directorate)"
             end
         elseif team == "Engineering Department" then
         -- If the player is on ED then get their ED rank
@@ -75,21 +75,21 @@ local function checkVIP(player,MCRank,team)
             local depRank = getPlayerRankInGroup(player,groupIDs.RD)
             if depRank >= 11 and depRank <= 12 then
             -- If the player is the Assistant Director or Director of Regulations then return true and the RD Dir log
-                return true, team, "RD Directorate"
+                return true, team, "(RD Directorate)"
             end
         elseif team == "Department of Operations" then
         -- If the player is on DoO then get their DoO rank
             local depRank = getPlayerRankInGroup(player,groupIDs.DoO)
             if depRank >= 7 and depRank <= 8 then
             -- If the player is the Executive Drone or Cardinal Drone then return true and the DoO Dir log
-                return true, team, "DoO Directorate"
+                return true, team, "(DoO Directorate)"
             end
         elseif team == "Innovation Department" then
             -- If the player is on ID then get their ID rank
             local depRank = getPlayerRankInGroup(player,groupIDs.ID)
             if depRank >= 8 and depRank <= 9 then
             -- If the player is the Deputy Director or Director of Innovation then return true and the ID Dir log
-                return true, team, "ID Directorate"
+                return true, team, "(ID Directorate)"
             end
         end
     else
